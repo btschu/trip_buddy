@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User's Quotes</title>
+    <title>View Trip</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -12,25 +12,28 @@
 <body>
     <div class="container">
         <nav class="navbar pt-5 justify-content-between mb-4">
-            {% for quote in quotes %}
-                {% if loop.index < 2 %}
-                    <h3 class="">Quotes posted by: {{ quote.poster_first_name }} {{ quote.poster_last_name }}</h3>
-                {% endif %}
-            {% endfor %}
+            <h3 class="">Hello, {{ user.first_name }}! Read about this trip!</h3>
             <div>
-                <a href="/dashboard">Dashboard</a>
-                <a class="btn btn-danger ml-5" href="/logout">Logout</a>
+                <a class="btn btn-success ml-3" href="/dashboard">Dashboard</a>
+                <a class="btn btn-danger ml-3" href="/logout">Logout</a>
             </div>
         </nav>
-        <div class="row d-flex justify-content-center">
-            <div class="col col-5">
-                {% for quote in quotes %}
-                    <div class="border border-dark mb-3 pt-3 pl-3 pr-3">
-                        <p>"{{ quote.quote }}"</p>
-                        <p class="pl-5">-{{ quote.author }}</p>
-                    </div>
+        <div class="border border-dark rounded p-3 mb-3 col-6 mx-auto">
+            <h3>{{ trip.destination }}</h3>
+            <p>
+                <span class="text-primary" >Start Date:</span> {{ trip.start_date.strftime('%m-%d-%Y') }} <br>
+                <span class="text-primary" >End Date:</span> {{ trip.end_date.strftime('%m-%d-%Y') }} <br>
+                <span class="text-primary" >Trip Created:</span> {{ trip.created_at.strftime('%m-%d-%Y') }} <br>
+                <span class="text-primary" >Trip Updated:</span> {{ trip.updated_at.strftime('%m-%d-%Y') }} <br>
+                <span class="text-primary" >Plan:</span> {{ trip.plan }} <br>
+                {% for trip in trips %}
+                    <span class="text-primary" >Trip Created By:</span> {{ trip.first_name }} {{ trip.last_name }}
                 {% endfor %}
-            </div>
+            </p>
+        </div>
+        <div class="border border-dark rounded p-3 col-6 mx-auto">
+            <h3>People who have joined the trip:</h3>
+            <p></p>
         </div>
     </div>
 </body>

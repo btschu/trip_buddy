@@ -52,8 +52,21 @@ class Trip:
         query = """
         SELECT * FROM trips
         WHERE id = %(id)s;"""
+        # JOIN users ON trips.user_id = users.id
         results = connectToMySQL(db).query_db(query, data)
         return results[0]
+
+    @classmethod
+    def get_all_trips_by_one_poster(cls, data):
+        query = """
+        SELECT * FROM trips
+        JOIN users ON users.id = trips.user_id
+        WHERE trips.id = %(id)s;"""
+        results = connectToMySQL(db).query_db(query, data)
+        all_trips = []
+        for trip in results:
+            all_trips.append(cls(trip))
+        return all_trips
 
     @classmethod
     def destroy_trip(cls,data):

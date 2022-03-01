@@ -65,6 +65,23 @@ def update_trip():
     Trip.update_trip(data)
     return redirect('/dashboard')
 
+@app.route('/trip/view/<int:id>')
+def view_trip(id):
+    if 'user_id' not in session:
+        return redirect('/logout')
+    data = {
+        "id":id
+    }
+    user_data = {
+        "id":session['user_id']
+    }
+    context = {
+        "trip" : Trip.get_one_trip(data),
+        "user" : User.get_by_id(user_data),
+        "trips" : Trip.get_all_trips_by_one_poster(data)
+    }
+    return render_template("view_trip.html", **context)
+
 @app.route('/trip/destroy/<int:id>')
 def destroy_trip(id):
     if 'user_id' not in session:

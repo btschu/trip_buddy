@@ -11,15 +11,18 @@ bcrypt = Bcrypt(app)
 def login():
     return render_template('login.html')
 
-@app.route('/login',methods=['POST'])
+@app.route("/login",methods=['POST'])
 def user_login():
-    user = User.get_by_email(request.form)
+    data = {
+        "email": request.form['email']
+    }
+    user = User.get_by_email(data)
     if not user:
-        flash("Invalid Email","login")
-        return redirect('/')
-    if not bcrypt.check_password_hash(user.password, request.form['password']):
-        flash("Invalid Password","login")
-        return redirect('/')
+        flash("Invalid Email/Password","login")
+        return redirect("/")
+    if not bcrypt.check_password_hash(user.password,request.form['password']):
+        flash("Invalid Email/Password","login")
+        return redirect("/")
     session['user_id'] = user.id
     return redirect('/dashboard')
 
