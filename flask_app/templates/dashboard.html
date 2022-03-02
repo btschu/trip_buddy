@@ -48,7 +48,7 @@
                             <td class="">{{ joined.start_date.strftime('%m-%d-%Y') }}</td>
                             <td class="">{{ joined.end_date.strftime('%m-%d-%Y') }}</td>
                             <td class="">{{ joined.plan }}</td>
-                            <td class=""><a href="/joined_trip/destroy/{{ joined.trip_id }}/{{ joined.user_id }}">Cancel</a>
+                            <td class=""><a href="/joined_trip/destroy/{{ joined.id }}">Cancel</a>
                         </tr>
                     {% endfor %}
                 </tbody>

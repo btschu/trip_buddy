@@ -90,7 +90,7 @@ class Trip:
 
     @classmethod
     def unjoin_trip(cls, data):
-        query="DELETE FROM joined_trips WHERE trip_id = %(trip_id)s, user_id = %(user_id)s"
+        query="DELETE FROM joined_trips WHERE trip_id = %(trip_id)s"
         return connectToMySQL(db).query_db(query, data)
 
     @classmethod
