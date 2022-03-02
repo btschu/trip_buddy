@@ -20,8 +20,8 @@
         </nav>
         <table class="row d-flex justify-content-around">
             <h4 class="mb-2">Your Trips:</h4>
-            <table class="table table-striped table-bordered table-dark table-hover mx-auto mt-3">
-                <thead class="text-warning text-center table-dark">
+            <table class="table table-striped table-bordered table-hover mx-auto mt-3">
+                <thead class="text-center">
                     <tr>
                         <th class="">Destination</th>
                         <th class="">Start Date</th>
@@ -34,20 +34,29 @@
                     {% for trip in trips %}
                         {% if session.user_id == trip.user_id %}
                             <tr>
-                                <td class="text-light"><a href="/trip/view/{{ trip.id }}">{{ trip.destination }}</a></td>
-                                <td class="text-light">{{ trip.start_date.strftime('%m-%d-%Y') }}</td>
-                                <td class="text-light">{{ trip.end_date.strftime('%m-%d-%Y') }}</td>
-                                <td class="text-light">{{ trip.plan }}</td>
-                                <td class="text-light"><a href="/trip/destroy/{{ trip.id }}">Remove</a> | <a href="/trip/edit/{{ trip.id }}">Edit</a></td>
+                                <td class=""><a href="/trip/view/{{ trip.id }}">{{ trip.destination }}</a></td>
+                                <td class="">{{ trip.start_date.strftime('%m-%d-%Y') }}</td>
+                                <td class="">{{ trip.end_date.strftime('%m-%d-%Y') }}</td>
+                                <td class="">{{ trip.plan }}</td>
+                                <td class=""><a href="/trip/destroy/{{ trip.id }}">Remove</a> | <a href="/trip/edit/{{ trip.id }}">Edit</a></td>
                             </tr>
                         {% endif %}
+                    {% endfor %}
+                    {% for joined in joined %}
+                        <tr>
+                            <td class=""><a href="/trip/view/{{ joined.id }}">{{ joined.destination }}</a></td>
+                            <td class="">{{ joined.start_date.strftime('%m-%d-%Y') }}</td>
+                            <td class="">{{ joined.end_date.strftime('%m-%d-%Y') }}</td>
+                            <td class="">{{ joined.plan }}</td>
+                            <td class=""><a href="/joined_trip/destroy/{{ joined.trip_id }}/{{ joined.user_id }}">Cancel</a>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>
         <table class="row d-flex justify-content-around">
             <h4 class="mb-2">Other Peoples Trips:</h4>
-            <table class="table table-striped table-bordered table-dark table-hover mx-auto mt-3">
-                <thead class="text-warning text-center table-dark">
+            <table class="table table-striped table-bordered table-hover mx-auto mt-3">
+                <thead class="text-center">
                     <tr>
                         <th class="">Destination</th>
                         <th class="">Start Date</th>
@@ -60,11 +69,11 @@
                     {% for trip in trips %}
                         {% if trip.user_id != session.user_id %}
                             <tr>
-                                <td class="text-light"><a href="/trip/view/{{ trip.id }}">{{ trip.destination }}</a></td>
-                                <td class="text-light">{{ trip.start_date.strftime('%m-%d-%Y') }}</td>
-                                <td class="text-light">{{ trip.end_date.strftime('%m-%d-%Y') }}</td>
-                                <td class="text-light">{{ trip.plan }}</td>
-                                <td class="text-light"><a href="">Join</a></td>
+                                <td class=""><a href="/trip/view/{{ trip.id }}">{{ trip.destination }}</a></td>
+                                <td class="">{{ trip.start_date.strftime('%m-%d-%Y') }}</td>
+                                <td class="">{{ trip.end_date.strftime('%m-%d-%Y') }}</td>
+                                <td class="">{{ trip.plan }}</td>
+                                <td class=""><a href="/join/trip">Join</a></td>
                             </tr>
                         {% endif %}
                     {% endfor %}

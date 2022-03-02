@@ -12,6 +12,7 @@ class Trip:
         self.destination = data['destination']
         self.start_date = data['start_date']
         self.end_date = data['end_date']
+        self.plan = data['plan']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         self.user_id = data['user_id']
@@ -67,6 +68,30 @@ class Trip:
         for trip in results:
             all_trips.append(cls(trip))
         return all_trips
+
+    @classmethod
+    def get_joined_trips(cls, data):
+        query = """
+        SELECT * FROM trips
+        JOIN joined_trips ON trips.id = joined_trips.trip_id
+        JOIN users ON users.id = joined_trips.user_id;"""
+        results = connectToMySQL(db).query_db(query, data)
+        joined_trips = []
+        for trip in results:
+            joined_trips.append(cls(trip))
+        return joined_trips
+
+    @classmethod
+    def join_trip(cls, data):
+        query="""
+        INSERT INTO joined_trips (trip_id, user_id)
+        VALUES (%(trip_id)s, %(user_id)s);"""
+        return connectToMySQL(db).query_db(query, data)
+
+    @classmethod
+    def unjoin_trip(cls, data):
+        query="DELETE FROM joined_trips WHERE trip_id = %(trip_id)s, user_id = %(user_id)s"
+        return connectToMySQL(db).query_db(query, data)
 
     @classmethod
     def destroy_trip(cls,data):

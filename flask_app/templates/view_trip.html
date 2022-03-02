@@ -33,7 +33,11 @@
         </div>
         <div class="border border-dark rounded p-3 col-6 mx-auto">
             <h3>People who have joined the trip:</h3>
-            <p></p>
+                {% for joined in joined %}
+                    {% if joined.trip_id != null %}
+                        <p>{{ joined.first_name }}</p>
+                    {% endif %}
+                {% endfor %}
         </div>
     </div>
 </body>

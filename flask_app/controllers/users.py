@@ -53,11 +53,12 @@ def dashboard():
     if 'user_id' not in session:
         return redirect('/logout')
     data ={
-        'id': session['user_id']
+        'id': session['user_id'],
     }
     context = {
         "user" : User.get_by_id(data),
-        "trips" : Trip.get_all_trips()
+        "trips" : Trip.get_all_trips(),
+        "joined" : Trip.get_joined_trips(data)
     }
     return render_template("dashboard.html", **context)
 
