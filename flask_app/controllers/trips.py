@@ -76,45 +76,35 @@ def view_trip(id):
         "id":session['user_id']
     }
     context = {
-        "trip" : Trip.get_one_trip(data),
+        # "trip" : Trip.get_one_trip(data),
         "user" : User.get_by_id(user_data),
         "trips" : Trip.get_all_trips_by_one_poster(data),
-        "joined" : Trip.get_joined_trips(data)
+        # "joined" : Trip.user_that_joined_trip(data),
+        "joined_trip" : Trip.one_trip_with_all_joiners(data),
+        "trip_id" : id,
     }
     return render_template("view_trip.html", **context)
 
-@app.route('/trips/<int:id>')
-def show_trip(id):
-    data ={
-        "id":id
-    }
-    context = {
-        "user" : User.get_by_id(data),
-        "trips" : Trip.get_all_trips(),
-        "joined" : Trip.get_joined_trips(data)
-    }
-    return render_template("dashboard.html", **context)
-
-@app.route('/join/trip',methods=['POST'])
-def join_trip():
+@app.route('/join/trip/<int:trip_id>')
+def join_trip(trip_id):
     if 'user_id' not in session:
         return redirect('/logout')
     data = {
-        'trip_id': request.form['trip_id'],
-        'user_id': request.form['user_id']
+        'trip_id': trip_id,
+        'user_id': session['user_id']
     }
-    print(data)
     Trip.join_trip(data)
-    return redirect(f"/trips/{request.form['trip_id']}")
+    return redirect("/dashboard")
 
-@app.route('/joined_trip/destroy/<int:trip_id>')
-def unjoin_trip(trip_id):
+@app.route('/joined_trip/destroy/<int:trip_id>/<int:user_id>')
+def unjoin_trip(trip_id, user_id):
     if 'user_id' not in session:
         return redirect('/logout')
     data = {
-        "trip_id":trip_id
+        "trip_id":trip_id,
+        "user_id":user_id
     }
-    Trip.unjoin_trip(data)
+    Trip.remove_from_joined_trips(data)
     return redirect('/dashboard')
 
 @app.route('/trip/destroy/<int:id>')

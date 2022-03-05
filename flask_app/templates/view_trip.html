@@ -19,25 +19,21 @@
             </div>
         </nav>
         <div class="border border-dark rounded p-3 mb-3 col-6 mx-auto">
-            <h3>{{ trip.destination }}</h3>
+            <h3>{{ joined_trip.destination }}</h3>
             <p>
-                <span class="text-primary" >Start Date:</span> {{ trip.start_date.strftime('%m-%d-%Y') }} <br>
-                <span class="text-primary" >End Date:</span> {{ trip.end_date.strftime('%m-%d-%Y') }} <br>
-                <span class="text-primary" >Trip Created:</span> {{ trip.created_at.strftime('%m-%d-%Y') }} <br>
-                <span class="text-primary" >Trip Updated:</span> {{ trip.updated_at.strftime('%m-%d-%Y') }} <br>
-                <span class="text-primary" >Plan:</span> {{ trip.plan }} <br>
-                {% for trip in trips %}
-                    <span class="text-primary" >Trip Created By:</span> {{ trip.first_name }} {{ trip.last_name }}
-                {% endfor %}
+                <span class="text-primary" >Start Date:</span> {{ joined_trip.start_date.strftime('%m-%d-%Y') }} <br>
+                <span class="text-primary" >End Date:</span> {{ joined_trip.end_date.strftime('%m-%d-%Y') }} <br>
+                <span class="text-primary" >Trip Created:</span> {{ joined_trip.created_at.strftime('%m-%d-%Y') }} <br>
+                <span class="text-primary" >Trip Updated:</span> {{ joined_trip.updated_at.strftime('%m-%d-%Y') }} <br>
+                <span class="text-primary" >Plan:</span> {{ joined_trip.plan }} <br>
+                <span class="text-primary" >Trip Created By:</span> {{ user.first_name }} {{ last_name }}
             </p>
         </div>
         <div class="border border-dark rounded p-3 col-6 mx-auto">
             <h3>People who have joined the trip:</h3>
-                {% for joined in joined %}
-                    {% if joined.trip_id != null %}
-                        <p>{{ joined.first_name }}</p>
-                    {% endif %}
-                {% endfor %}
+            {% for trip in trips %}
+                <p>{{ trip.first_name }}</p>
+            {% endfor %}
         </div>
     </div>
 </body>
