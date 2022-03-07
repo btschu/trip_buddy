@@ -12,7 +12,7 @@
 <body>
     <div class="container">
         <nav class="navbar pt-5 justify-content-between mb-4">
-            <h3 class="">Hello, {{ user.first_name }}!</h3>
+            <h3 class="">Hello, {{ session.first_name }}!</h3>
             <div>
                 <a class="btn btn-success ml-3" href="/trip/new">Create a New Trip!</a>
                 <a class="btn btn-danger ml-3" href="/logout">Logout</a>
@@ -41,13 +41,13 @@
                                 <td class=""><a href="/trip/destroy/{{ trip.id }}">Remove</a> | <a href="/trip/edit/{{ trip.id }}">Edit</a></td>
                             </tr>
                         {% endif %}
-                        {% if session.user_id != trip.user_id %}
+                        {% if session.user_id in trip.joiners | map (attribute = "id") %}
                             <tr>
                                 <td class=""><a href="/trip/view/{{ trip.id }}">{{ trip.destination }}</a></td>
                                 <td class="">{{ trip.start_date.strftime('%m-%d-%Y') }}</td>
                                 <td class="">{{ trip.end_date.strftime('%m-%d-%Y') }}</td>
                                 <td class="">{{ trip.plan }}</td>
-                                <td class=""><a href="/joined_trip/destroy/{{ trip.id }}/{{ session.user_id }}">Cancel</a>
+                                <td class=""><a href="/unjoin_trip/{{ trip.id }}">Cancel</a>
                             </tr>
                         {% endif %}
                     {% endfor %}
@@ -74,13 +74,6 @@
                                 <td class="">{{ trip.end_date.strftime('%m-%d-%Y') }}</td>
                                 <td class="">{{ trip.plan }}</td>
                                 <td class=""><a href="/join/trip/{{trip.id}}">Join</a></td>
-                                <!-- <td>
-                                    <form action="/join/trip" method="post">
-                                        <input type="hidden" name="trip_id" value="{{ trip.id }}">
-                                        <input type="hidden" name="user_id" value="{{ session.user_id }}">
-                                        <input type="submit" class="btn-link border-0 bg-transparent" value="Join">
-                                    </form>
-                                </td> -->
                             </tr>
                         {% endif %}
                     {% endfor %}

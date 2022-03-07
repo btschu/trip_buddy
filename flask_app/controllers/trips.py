@@ -3,17 +3,31 @@ from flask_app import app
 from flask_app.models.user import User
 from flask_app.models.trip import Trip
 
+@app.route('/dashboard')
+def dashboard():
+    if 'user_id' not in session:
+        return redirect('/logout')
+    data ={
+        'id': session['user_id'],
+        'first_name': session['first_name']
+    }
+    context = {
+        "trips_not_joined" : Trip.all_trips_not_joined(data),
+        # "joined_trips" : Trip.all_trips_joined(data),
+        # "joiner" : Trip.user_that_joined_trip(data)
+        "joined_trips" : Trip.get_all_trips_with_joiners(data)
+    }
+    return render_template("dashboard.html", **context)
+
 @app.route('/trip/new')
 def new_trip():
     if 'user_id' not in session:
         return redirect('/logout')
     data = {
-        "id":session['user_id']
+        "id":session['user_id'],
+        'first_name': session['first_name']
     }
-    context = {
-        'user' : User.get_by_id(data)
-    }
-    return render_template('create_trip.html', **context)
+    return render_template('create_trip.html')
 
 @app.route('/trip/create',methods=['POST'])
 def create_trip():
@@ -36,14 +50,14 @@ def edit_trip(id):
     if 'user_id' not in session:
         return redirect('/logout')
     user_data = {
-        "id":session['user_id']
+        "id":session['user_id'],
+        'first_name': session['first_name']
     }
     data = {
         "id":id
     }
     context = {
         "edit" : Trip.get_one_trip(data),
-        "user" : User.get_by_id(user_data)
     }
     return render_template("edit_trip.html", **context)
 
@@ -70,18 +84,14 @@ def view_trip(id):
     if 'user_id' not in session:
         return redirect('/logout')
     data = {
-        "id":id
-    }
-    user_data = {
-        "id":session['user_id']
+        "id":id,
+        "user_id":session['user_id'],
+        'first_name': session['first_name'],
+        'last_name': session['last_name'],
     }
     context = {
-        # "trip" : Trip.get_one_trip(data),
-        "user" : User.get_by_id(user_data),
-        "trips" : Trip.get_all_trips_by_one_poster(data),
-        # "joined" : Trip.user_that_joined_trip(data),
-        "joined_trip" : Trip.one_trip_with_all_joiners(data),
-        "trip_id" : id,
+        "joined" : Trip.user_that_joined_trip(data),
+        "trip" : Trip.get_one_trip(data),
     }
     return render_template("view_trip.html", **context)
 
@@ -96,13 +106,13 @@ def join_trip(trip_id):
     Trip.join_trip(data)
     return redirect("/dashboard")
 
-@app.route('/joined_trip/destroy/<int:trip_id>/<int:user_id>')
-def unjoin_trip(trip_id, user_id):
+@app.route('/unjoin_trip/<int:trip_id>')
+def unjoin_trip(trip_id):
     if 'user_id' not in session:
         return redirect('/logout')
     data = {
         "trip_id":trip_id,
-        "user_id":user_id
+        "user_id":session['user_id']
     }
     Trip.remove_from_joined_trips(data)
     return redirect('/dashboard')

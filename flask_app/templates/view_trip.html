@@ -12,27 +12,27 @@
 <body>
     <div class="container">
         <nav class="navbar pt-5 justify-content-between mb-4">
-            <h3 class="">Hello, {{ user.first_name }}! Read about this trip!</h3>
+            <h3 class="">Hello, {{ session.first_name }}! Read about this trip!</h3>
             <div>
                 <a class="btn btn-success ml-3" href="/dashboard">Dashboard</a>
                 <a class="btn btn-danger ml-3" href="/logout">Logout</a>
             </div>
         </nav>
         <div class="border border-dark rounded p-3 mb-3 col-6 mx-auto">
-            <h3>{{ joined_trip.destination }}</h3>
+            <h3>{{ trip.destination }}</h3>
             <p>
-                <span class="text-primary" >Start Date:</span> {{ joined_trip.start_date.strftime('%m-%d-%Y') }} <br>
-                <span class="text-primary" >End Date:</span> {{ joined_trip.end_date.strftime('%m-%d-%Y') }} <br>
-                <span class="text-primary" >Trip Created:</span> {{ joined_trip.created_at.strftime('%m-%d-%Y') }} <br>
-                <span class="text-primary" >Trip Updated:</span> {{ joined_trip.updated_at.strftime('%m-%d-%Y') }} <br>
-                <span class="text-primary" >Plan:</span> {{ joined_trip.plan }} <br>
-                <span class="text-primary" >Trip Created By:</span> {{ user.first_name }} {{ last_name }}
+                <span class="text-success" >Start Date:</span> {{ trip.start_date.strftime('%m-%d-%Y') }} <br>
+                <span class="text-success" >End Date:</span> {{ trip.end_date.strftime('%m-%d-%Y') }} <br>
+                <span class="text-success" >Trip Created:</span> {{ trip.created_at.strftime('%m-%d-%Y') }} <br>
+                <span class="text-success" >Trip Updated:</span> {{ trip.updated_at.strftime('%m-%d-%Y') }} <br>
+                <span class="text-success" >Plan:</span> {{ trip.plan }} <br>
+                <span class="text-success" >Trip Created By:</span> {{ trip.creator_first_name }} {{ trip.creator_last_name }}
             </p>
         </div>
         <div class="border border-dark rounded p-3 col-6 mx-auto">
             <h3>People who have joined the trip:</h3>
-            {% for trip in trips %}
-                <p>{{ trip.first_name }}</p>
+            {% for trip in joined  %}
+                <p>{{ trip.joiner_first_name }} {{ trip.joiner_last_name }}</p>
             {% endfor %}
         </div>
     </div>
