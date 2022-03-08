@@ -16,9 +16,10 @@ class Trip:
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         self.user_id = data['user_id']
-        self.creator_first_name = data['first_name']
-        self.creator_last_name = data['last_name']
+        # self.creator_first_name = data['first_name']
+        # self.creator_last_name = data['last_name']
         self.joiners = []
+        self.creator = None
 
     @classmethod
     def save_trip(cls,data):
@@ -64,19 +65,6 @@ class Trip:
             trips.append(row)
         return trips
 
-    # @classmethod
-    # def all_trips_joined(cls,data):
-    #     query = """
-    #     SELECT * FROM trips
-    #     LEFT JOIN joined_trips ON trips.id = joined_trips.trip_id
-    #     ORDER BY start_date ASC;"""
-    #     results = connectToMySQL(db).query_db(query,data)
-    #     trips = []
-    #     for row in results:
-    #         trips.append(row)
-    #     pprint(trips)
-    #     return trips
-
     @classmethod
     def get_all_trips_with_joiners(cls, data):
         query = """
@@ -118,8 +106,20 @@ class Trip:
         JOIN users ON trips.user_id = users.id
         WHERE trips.id = %(id)s;"""
         results = connectToMySQL(db).query_db(query, data)
-        pprint(results)
-        return cls(results[0])
+        creator_info = {
+            "id":results[0]['users.id'],
+            "first_name":results[0]['first_name'],
+            "last_name":results[0]['last_name'],
+            "email":results[0]['email'],
+            "password":results[0]['password'],
+            "created_at":results[0]['users.created_at'],
+            "updated_at":results[0]['users.updated_at']
+        }
+        this_trip = cls(results[0])
+        this_trip.creator = user.User(creator_info)
+        # pprint(this_trip)
+        # pprint(this_trip.creator)
+        return this_trip
 
     @classmethod
     def user_that_joined_trip(cls, data):

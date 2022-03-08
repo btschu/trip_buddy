@@ -9,12 +9,9 @@ def dashboard():
         return redirect('/logout')
     data ={
         'id': session['user_id'],
-        'first_name': session['first_name']
     }
     context = {
         "trips_not_joined" : Trip.all_trips_not_joined(data),
-        # "joined_trips" : Trip.all_trips_joined(data),
-        # "joiner" : Trip.user_that_joined_trip(data)
         "joined_trips" : Trip.get_all_trips_with_joiners(data)
     }
     return render_template("dashboard.html", **context)
@@ -23,10 +20,6 @@ def dashboard():
 def new_trip():
     if 'user_id' not in session:
         return redirect('/logout')
-    data = {
-        "id":session['user_id'],
-        'first_name': session['first_name']
-    }
     return render_template('create_trip.html')
 
 @app.route('/trip/create',methods=['POST'])
@@ -49,10 +42,6 @@ def create_trip():
 def edit_trip(id):
     if 'user_id' not in session:
         return redirect('/logout')
-    user_data = {
-        "id":session['user_id'],
-        'first_name': session['first_name']
-    }
     data = {
         "id":id
     }
@@ -86,8 +75,6 @@ def view_trip(id):
     data = {
         "id":id,
         "user_id":session['user_id'],
-        'first_name': session['first_name'],
-        'last_name': session['last_name'],
     }
     context = {
         "joined" : Trip.user_that_joined_trip(data),

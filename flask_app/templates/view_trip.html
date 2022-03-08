@@ -26,7 +26,7 @@
                 <span class="text-success" >Trip Created:</span> {{ trip.created_at.strftime('%m-%d-%Y') }} <br>
                 <span class="text-success" >Trip Updated:</span> {{ trip.updated_at.strftime('%m-%d-%Y') }} <br>
                 <span class="text-success" >Plan:</span> {{ trip.plan }} <br>
-                <span class="text-success" >Trip Created By:</span> {{ trip.creator_first_name }} {{ trip.creator_last_name }}
+                <span class="text-success" >Trip Created By:</span> {{ trip.creator.first_name }} {{ trip.creator.last_name }}
             </p>
         </div>
         <div class="border border-dark rounded p-3 col-6 mx-auto">

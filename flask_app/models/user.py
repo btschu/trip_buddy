@@ -16,9 +16,6 @@ class User:
         self.updated_at = data['updated_at']
         self.trips = []
 
-    def full_name(self):
-        return "self.first_name self.last_name"
-
     @classmethod
     def save(cls,data):
         query = """INSERT INTO users (first_name, last_name, email, password)
