@@ -19,7 +19,7 @@ def user_login():
         flash("Invalid Email/Password","login")
         return redirect("/")
     if not bcrypt.check_password_hash(user.password,request.form['password']):
-        flash("Invalid Email/Password","login")
+        flash("Invalid Password","login")
         return redirect("/")
     session['user_id'] = user.id
     session['email'] = user.email
@@ -43,6 +43,9 @@ def register():
     }
     id = User.save(data)
     session['user_id'] = id
+    session['email'] = request.form['email']
+    session['first_name'] = request.form['first_name']
+    session['last_name'] = request.form['last_name']
     return redirect('/dashboard')
 
 @app.route('/logout')

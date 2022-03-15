@@ -39,28 +39,28 @@ class User:
         SELECT * FROM users
         WHERE email = %(email)s;"""
         results = connectToMySQL(db).query_db(query,user)
-        if len(user['first_name']) < 2:
-            flash("First name must be at least 2 characters","register")
+        if len(user['first_name']) < 1:
+            flash("Please enter your FIRST NAME.","register")
             is_valid= False
-        if len(user['last_name']) < 2:
-            flash("Last name must be at least 2 characters","register")
+        if len(user['last_name']) < 1:
+            flash("Please enter your LAST NAME","register")
             is_valid= False
         if len(results) >= 1:
-            flash("Email already taken.","register")
+            flash("That EMAIL ADDRESS is already registered.","register")
             is_valid=False
         if not EMAIL_REGEX.match(user['email']):
-            flash("Invalid Email!!!","login")
+            flash("Please enter a valid EMAIL ADDRESS.","login")
             is_valid=False
         if len(user['password']) < 8:
-            flash("Password must be at least 8 characters","register")
+            flash("Your PASSWORD must be at least 8 characters long.","register")
             is_valid = False
         if not any(char.isdigit() for char in user['password']):
-            flash("Password should have at least one number", "register")
+            flash("Your PASSWORD must contain at least one number.", "register")
             is_valid = False
         if not any(char.isupper() for char in user['password']):
-            flash("Password should have at least one uppercase letter", "register")
+            flash("Your PASSWORD must contain at least one uppercase letter.", "register")
             is_valid = False
         if user['password'] != user['confirm']:
-            flash("Passwords don't match","register")
+            flash("Your PASSWORDS do not match.","register")
             is_valid = False
         return is_valid
