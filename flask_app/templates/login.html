@@ -9,18 +9,18 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="d-flex justify-content-center align-items-center text-center h-100">
-        <form id="login_reg_form" class="bg-transparent bg-opacity-25 p-3 col-5" action="/login" method="post">
-            <div class="form-group pb-3">
+    <div class="d-flex justify-content-center align-items-center text-center mt-4">
+        <form id="login_reg_form" class="content bg-transparent bg-opacity-25 p-3 col-5" action="/login" method="post">
+            <div class="form-group p-4">
                 <div class="d-flex justify-content-center pb-3">
                     <img class="" src="{{ url_for('static', filename='img/login_icon.png') }}">
                     <h1 class="">Sign In</h1>
                 </div>
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
-                        <div class="">
+                        <div class="alert-danger mb-4">
                             {% for message in messages %}
-                                <p class='text-danger'><em>{{ message }}</em></p>
+                                <p class='text-danger p-2'><em>{{ message }}</em></p>
                             {% endfor %}
                         </div>
                     {% endif %}

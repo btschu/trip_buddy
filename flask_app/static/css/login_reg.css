@@ -1,49 +1,61 @@
 .btn {
-    /* box-shadow: 5px 5px 3px 0px black; */
-    border-color: rgb(39, 1, 39);
+    border-color: blue;
     color: #fff;
-    box-shadow: 0 0 40px 40px rgb(39, 1, 39) inset, 0 0 0 0 rgb(39, 1, 39);
+    box-shadow: 0 0 40px 40px blue inset, 0 0 0 0 blue;
     transition: all 150ms ease-in-out;
     width: 100%;
+    /* box-shadow: 5px 5px 3px 0px black; */
 }
 .btn:hover {
-    box-shadow: 0 0 10px 0 rgb(39, 1, 39) inset, 0 0 10px 4px rgb(39, 1, 39);
+    box-shadow: 0 0 10px 0 blue inset, 0 0 10px 4px blue;
 }
 
 #login_reg_form {
-    transform:
+    box-shadow: inset 0 3px 6px rgba(0,0,0,0.16), 0 4px 6px rgba(0,0,0,0.45) !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(255, 255, 255, 0.589) !important;
+    /* backdrop-filter: blur(5px) !important; */
+    /* border: 5px solid #e6e6e6; */
+    /* transform:
     perspective(750px)
     translate3d(0px, 0px, -250px)
-    rotateX(33deg)
+    rotateX(40deg)
     scale(0.9, 0.9);
-    border-radius: 20px;
-    /* border: 5px solid #e6e6e6; */
-    box-shadow: inset 0 3px 6px rgba(0,0,0,0.16), 0 4px 6px rgba(0,0,0,0.45);
-    transition: 0.4s ease-in-out transform;
+    border: 5px solid #e6e6e6;
+    transition: 0.4s ease-in-out transform; */
+    /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important; */
 }
 
-#login_reg_form:hover {
+/* #login_reg_form:hover {
     transform: translate3d(0px, 0px, -250px);
-}
+} */
 
 img {
     height: 50px;
     padding-right: 10px;
 }
 
-p {
+/* p {
     color: white;
-}
+} */
 
 h1 {
-    color: white;
+    /* color: white; */
+    /* text-shadow: 0px 0px 30px white,0px 0px 30px white,0px 0px 30px white,0px 0px 10px #553300,0px 0px 10px #553300; */
+
     padding-left: 10px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 body {
+    /* height: 100vh !important;
+    background: rgb(122, 158, 143) !important; */
     /* background: linear-gradient(blue, rgb(26, 24, 24)) !important; */
-    height: 100vh !important;
-    background: radial-gradient(rgb(102, 101, 101), rgb(41, 1, 41)) !important;
+    /* background: radial-gradient(rgb(168, 160, 160), rgb(51, 51, 78)) !important; */
+    /* background-image: url(../img/red_background.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%; */
 }
 
