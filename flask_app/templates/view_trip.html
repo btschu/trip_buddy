@@ -20,10 +20,10 @@
         <div class="border border-dark rounded p-3 mb-3 col-6 mx-auto">
             <h3>{{ trip.destination }}</h3>
             <p>
-                <span class="text-success" >Start Date:</span> {{ trip.start_date.strftime('%m-%d-%Y') }} <br>
-                <span class="text-success" >End Date:</span> {{ trip.end_date.strftime('%m-%d-%Y') }} <br>
-                <span class="text-success" >Trip Created:</span> {{ trip.created_at.strftime('%m-%d-%Y') }} <br>
-                <span class="text-success" >Trip Updated:</span> {{ trip.updated_at.strftime('%m-%d-%Y') }} <br>
+                <span class="text-success" >Start Date:</span> {{ trip.start_date.strftime('%b %d, %Y') }} <br>
+                <span class="text-success" >End Date:</span> {{ trip.end_date.strftime('%b %d, %Y') }} <br>
+                <span class="text-success" >Trip Created:</span> {{ trip.created_at.strftime('%b %d, %Y') }} <br>
+                <span class="text-success" >Trip Updated:</span> {{ trip.updated_at.strftime('%b %d, %Y') }} <br>
                 <span class="text-success" >Plan:</span> {{ trip.plan }} <br>
                 <span class="text-success" >Trip Created By:</span> {{ trip.creator.first_name }} {{ trip.creator.last_name }}
             </p>
