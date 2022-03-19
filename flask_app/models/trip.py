@@ -2,7 +2,7 @@ from re import U
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 from flask_app.models import user
-from pprint import pprint
+from pprint import pp, pprint
 
 db = "trips_db"
 
@@ -65,12 +65,45 @@ class Trip:
             trips.append(row)
         return trips
 
+    # @classmethod
+    # def get_all_trips_with_joiners(cls, data):
+    #     query = """
+    #     SELECT * FROM trips
+    #     LEFT JOIN joined_trips ON trips.id = joined_trips.trip_id
+    #     LEFT JOIN users ON users.id = joined_trips.user_id
+    #     ORDER BY start_date ASC;"""
+    #     results = connectToMySQL(db).query_db(query, data)
+    #     this_joined_trip = cls(results[0])
+    #     joined_trip_info = {
+    #         "id":results[0]['joined_trips.id'],
+    #         "user_id":results[0]['joined_trips.user_id'],
+    #         "trip_id":results[0]['trip_id'],
+    #         "created_at":results[0]['joined_trips.created_at'],
+    #         "updated_at":results[0]['joined_trips.updated_at'],
+    #     }
+    #     this_joiner = joined_trip_info
+    #     this_joined_trip.joiners = this_joiner
+    #     joined_trips = []
+    #     for trip in results:
+    #         joiner_info = {
+    #             "id":trip['users.id'],
+    #             "first_name":trip['first_name'],
+    #             "last_name":trip['last_name'],
+    #             "email":trip['email'],
+    #             "password":trip['password'],
+    #             "created_at":trip['users.created_at'],
+    #             "updated_at":trip['users.updated_at'],
+    #         }
+    #         if trip['users.id'] != None:
+    #             this_joiner.joiners.append(user.User(joiner_info))
+    #     return this_joined_trip
+
     @classmethod
     def get_all_trips_with_joiners(cls, data):
         query = """
         SELECT * FROM trips
-        JOIN joined_trips ON trips.id = joined_trips.trip_id
-        JOIN users ON users.id = joined_trips.user_id
+        LEFT JOIN joined_trips ON trips.id = joined_trips.trip_id
+        LEFT JOIN users ON users.id = joined_trips.user_id
         ORDER BY start_date ASC;"""
         results = connectToMySQL(db).query_db(query, data)
         joined_trips = []
@@ -84,25 +117,14 @@ class Trip:
                 "created_at":trip['users.created_at'],
                 "updated_at":trip['users.updated_at'],
             }
-            joined_trip_info = {
-                "id":trip['joined_trips.id'],
-                "user_id":trip['joined_trips.user_id'],
-                "trip_id":trip['trip_id'],
-                "created_at":trip['joined_trips.created_at'],
-                "updated_at":trip['joined_trips.updated_at'],
-            }
             if len(joined_trips) == 0:
                 joined_trips.append(cls(trip))
-                # pprint(f"FIRST TRIP {joined_trips}")
-            if trip['joined_trips.id'] and len(joined_trips[-1].joiners) == 0:
-                joined_trips[-1].joiners.append(user.User(joiner_info))
-                # pprint(f"FIRST JOINER {joined_trips[-1].joiners}")
-            if trip['trip_id'] and joined_trips[-1].joiners[-1] != trip['users.id']:
-                joined_trips[-1].joiners.append(user.User(joiner_info))
-                # pprint(f"OTHER JOINER {joined_trips[-1].joiners}")
             if trip['id'] and trip['id'] != joined_trips[-1].id:
                 joined_trips.append(cls(trip))
-                # pprint(f"OTHER TRIP {joined_trips[-1]}")
+            if trip['joined_trips.id'] and len(joined_trips[-1].joiners) == 0:
+                joined_trips[-1].joiners.append(user.User(joiner_info))
+            if trip['trip_id'] and joined_trips[-1].joiners[-1] != trip['users.id']:
+                joined_trips[-1].joiners.append(user.User(joiner_info))
             pprint(trip,sort_dicts = False)
         return joined_trips
 

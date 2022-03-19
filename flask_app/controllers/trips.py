@@ -78,7 +78,7 @@ def view_trip(id):
     }
     context = {
         "joined" : Trip.user_that_joined_trip(data),
-        "trip" : Trip.get_one_trip(data),
+        "trip" : Trip.get_one_trip(data)
     }
     return render_template("view_trip.html", **context)
 
