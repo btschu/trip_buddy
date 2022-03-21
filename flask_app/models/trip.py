@@ -16,8 +16,7 @@ class Trip:
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         self.user_id = data['user_id']
-        # self.creator_first_name = data['first_name']
-        # self.creator_last_name = data['last_name']
+
         self.joiners = []
         self.creator = None
 
@@ -64,39 +63,6 @@ class Trip:
         for row in results:
             trips.append(row)
         return trips
-
-    # @classmethod
-    # def get_all_trips_with_joiners(cls, data):
-    #     query = """
-    #     SELECT * FROM trips
-    #     LEFT JOIN joined_trips ON trips.id = joined_trips.trip_id
-    #     LEFT JOIN users ON users.id = joined_trips.user_id
-    #     ORDER BY start_date ASC;"""
-    #     results = connectToMySQL(db).query_db(query, data)
-    #     this_joined_trip = cls(results[0])
-    #     joined_trip_info = {
-    #         "id":results[0]['joined_trips.id'],
-    #         "user_id":results[0]['joined_trips.user_id'],
-    #         "trip_id":results[0]['trip_id'],
-    #         "created_at":results[0]['joined_trips.created_at'],
-    #         "updated_at":results[0]['joined_trips.updated_at'],
-    #     }
-    #     this_joiner = joined_trip_info
-    #     this_joined_trip.joiners = this_joiner
-    #     joined_trips = []
-    #     for trip in results:
-    #         joiner_info = {
-    #             "id":trip['users.id'],
-    #             "first_name":trip['first_name'],
-    #             "last_name":trip['last_name'],
-    #             "email":trip['email'],
-    #             "password":trip['password'],
-    #             "created_at":trip['users.created_at'],
-    #             "updated_at":trip['users.updated_at'],
-    #         }
-    #         if trip['users.id'] != None:
-    #             this_joiner.joiners.append(user.User(joiner_info))
-    #     return this_joined_trip
 
     @classmethod
     def get_all_trips_with_joiners(cls, data):
